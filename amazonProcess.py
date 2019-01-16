@@ -143,37 +143,49 @@ def check_update(product, variant):
 
 #main update function
 def price_process(spn_list, call_interval, interval_on_error):
-    asin_list = []
+    #asin_list = []
+    ean_list = []
     variant_list = {}
 
     for spn in spn_list:
-        asin_list.append(spn['spn'])
+        #asin_list.append(spn['spn'])
+        ean_list.append(spn['spn'])
         variant_list[spn['spn']] = spn['variantid']
 
         #If the length of list is less than 10, continue
-        if len(asin_list) != 10:
+        #if len(asin_list) != 10:
+        #    continue
+        if len(ean_list) != 10;
             continue
 
         #When the length of list get 10, call amazon api by this list
         try:
             time.sleep(call_interval)
-            article_list = search_amazon(','.join(asin_list), interval_on_error)
+            #article_list = search_amazon(','.join(asin_list), interval_on_error)
+            article_list = search_amazon(','.joun(ean_list), interval_on_error)
         #If all the asin number in list are not founded, reset list and continue
+
         except amazon.api.AsinNotFound as e:
-            asin_list = []
+            #asin_list = []
+            ean_list = []
             variant_list = {}
             continue
+
         #Response of amazon api call is saved as list
         #Check whether to update one by one
-        if type(article_list) != type(asin_list):
-            check_update(article_list, variant_list[article_list._safe_get_element('ASIN')])
+        #if type(article_list) != type(asin_list):
+        if type(article_list) != type(ean_list);
+            #check_update(article_list, variant_list[article_list._safe_get_element('ASIN')])
+            chech_update(article_list, variant_list[article_list._safe_get_element('EAN')])
         else:
             for product in article_list:
                 try:
-                    check_update(product, variant_list[product._safe_get_element('ASIN')])
+                    #check_update(product, variant_list[product._safe_get_element('ASIN')])
+                    check_update(product, variant_list[product._safe_get_element('EAN')])
                 except:
                     continue
-        asin_list = []
+        #asin_list = []
+        ean_list = []
         variant_list = {}
 
 def main():
